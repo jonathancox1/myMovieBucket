@@ -1,3 +1,3 @@
 Scene It?
 
-an app built with Javascripta Bootstrap
+an app built with Javascript and Bootstrap
