@@ -1,16 +1,18 @@
-body {
-	background-color: #B2E9FD;
+.card {
+	transition: transform .5s;
 }
 
-.header h2 {
-	color: #DC4247;
+.card:hover {
+	transform: scale(1.025);
+	box-shadow: 10 10 10 black;
 }
 
-.header p {
-	color: #50524F;
+#check:hover {
+	color: rgb(39, 199, 39);
 }
 
-.results {
-	margin-top: 20px;
-}
+/* to overwrite the <a> styling */
 
+#checkHREF {
+	color: rgb(96, 96, 96);
+}
