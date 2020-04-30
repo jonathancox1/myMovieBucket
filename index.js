@@ -50,21 +50,40 @@ function saveToWatchList(imdbID) {
   document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
 
   const movie = movieData.find(function (currentMovie) {
-    console.log(currentMovie.imdbID + 'currentMovie.imdbID');
     return currentMovie.imdbID == imdbID;
   });
   let watchlistJSON = localStorage.getItem('watchlist');
   let watchlist = JSON.parse(watchlistJSON);
 
   if (watchlist === null) {
-    watchlist = [];
+    watchlist = []
     watchlist.push(movie);
   } else {
     watchlist.push(movie);
   }
 
+
+
+  // console.log(`${watchlist} watchlist`)
+  // let correctedList = watchlist.filter((item, index) => {
+  //   return watchlist.indexOf(item) === index;
+  // });
+  // console.log(`${correctedList} corrected`);
+
+  // let unique = [...new Set(watchlist)]
+  // console.log(unique);
+
+
+  // var newObj = []
+  // Object.keys(watchlist).forEach(function (key) {
+  //   if (watchlist[key] == imdbID) {
+  //     newObj.push(movie);
+  //     return newObj;
+  //   }
+  // });
+  // console.log(newObj);
+
   watchlistJSON = JSON.stringify(watchlist);
-  console.log(watchlistJSON + 'json');
   localStorage.setItem('watchlist', watchlistJSON);
 
 }
