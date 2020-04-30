@@ -16,3 +16,13 @@
 #checkHREF {
 	color: rgb(96, 96, 96);
 }
+
+#ex:hover {
+	color: rgb(206, 45, 45);
+}
+
+/* to overwrite the <a> styling */
+
+#ex {
+	color: rgb(96, 96, 96);
+}
