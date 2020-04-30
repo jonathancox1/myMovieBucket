@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function saveToWatchList(imdbID) {
   // change the icon color to green, but only alters the first element with id checkHREF  - doesnt work correctly
   document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
+  document.getElementById(imdbID).parentElement.removeAttribute('onclick');
 
   const movie = movieData.find(function (currentMovie) {
     return currentMovie.imdbID == imdbID;

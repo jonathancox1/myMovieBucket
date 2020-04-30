@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // render function 
 function renderMovies(watchlist1) {
     if (watchlist1 === null || watchlist1.length == 0) {
-        return `<div>Your List is Empty</div>`
+        return `<div class="row d-flex justify-content-center">Your List is Empty</div>`
     } else {
         const movieHtmlArray = watchlist1.map(function (currentMovie) {
             return `
