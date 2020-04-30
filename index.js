@@ -1,6 +1,8 @@
 // get the main container
 const movieContainer = document.querySelector(".moviesContainer");
 
+let movies = [];
+
 
 // document ready block
 document.addEventListener('DOMContentLoaded', function () {
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="card mb-3 mr-4 w-100 shadow d-flex" style="max-width: 500px;">
               <div class="row no-gutters">
                 <div class="col-md-4">
-                  <img src="${currentMovie.Poster}" class="card-img" height="250px" alt="${currentMovie.Title}">
+                  <img src="${currentMovie.Poster}" class="card-img" height="250px" alt="${currentMovie.Title}" onerror="if (this.src != 'images/no_image.png') this.src = 'images/no_image.png';">
                 </div>
                 <div class="col-md-8">
                   <div class="card-body flex-column justify-content-between h-100">
@@ -36,7 +38,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const myForm = document.getElementById('search-form');
   myForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    movieContainer.innerHTML = renderMovies(movieData);
+
+    // find searchbar .var() and correctly encode the users input
+    const searchString = $('#searchBar').val();
+    const urlEncodedSearchString = encodeURIComponent(searchString);
+
+    // access the OMDB API
+    axios.get('http://www.omdbapi.com/?apikey=b43843a0&s=' + urlEncodedSearchString)
+      .then(function (response) {
+        movieContainer.innerHTML = renderMovies(response.data.Search);
+        movies = response.data.Search;
+        return movies;
+      })
   })
 
 
@@ -50,7 +63,8 @@ function saveToWatchList(imdbID) {
   document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
   document.getElementById(imdbID).parentElement.removeAttribute('onclick');
 
-  const movie = movieData.find(function (currentMovie) {
+  // get the movie data
+  const movie = movies.find(function (currentMovie) {
     return currentMovie.imdbID == imdbID;
   });
   let watchlistJSON = localStorage.getItem('watchlist');
@@ -62,27 +76,6 @@ function saveToWatchList(imdbID) {
   } else {
     watchlist.push(movie);
   }
-
-
-
-  // console.log(`${watchlist} watchlist`)
-  // let correctedList = watchlist.filter((item, index) => {
-  //   return watchlist.indexOf(item) === index;
-  // });
-  // console.log(`${correctedList} corrected`);
-
-  // let unique = [...new Set(watchlist)]
-  // console.log(unique);
-
-
-  // var newObj = []
-  // Object.keys(watchlist).forEach(function (key) {
-  //   if (watchlist[key] == imdbID) {
-  //     newObj.push(movie);
-  //     return newObj;
-  //   }
-  // });
-  // console.log(newObj);
 
   watchlistJSON = JSON.stringify(watchlist);
   localStorage.setItem('watchlist', watchlistJSON);
