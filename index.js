@@ -8,7 +8,7 @@ let movies = [];
 document.addEventListener('DOMContentLoaded', function () {
   function renderMovies(movieArray) {
     const movieHtmlArray = movieArray.map(function (currentMovie) {
-      axios.get('https://www.omdbapi.com/?apikey=b43843a0&i=' + currentMovie.imdbID)
+      axios.get('http://www.omdbapi.com/?apikey=b43843a0&i=' + currentMovie.imdbID)
         .then(function (response) {
           movieContainer.innerHTML += (`
             <div class="card mb-3 mr-4 w-100 shadow d-flex" style="max-width: 500px;">
