@@ -7,18 +7,14 @@
 	box-shadow: 10 10 10 black;
 }
 
-#checkHREF:hover {
-	color: rgb(39, 199, 39);
-}
-
 /* to overwrite the <a> styling */
 
 #checkHREF {
 	color: rgb(96, 96, 96);
 }
 
-#ex:hover {
-	color: rgb(206, 45, 45);
+#checkHREF:hover {
+	color: rgb(39, 199, 39);
 }
 
 /* to overwrite the <a> styling */
@@ -27,6 +23,6 @@
 	color: rgb(96, 96, 96);
 }
 
-.imdb {
-	color: rgb(230, 196, 0);
+#ex:hover {
+	color: rgb(206, 45, 45);
 }

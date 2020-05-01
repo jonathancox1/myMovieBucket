@@ -1,7 +1,6 @@
 // get the main container
 const movieContainer = document.querySelector(".moviesContainer");
 
-// create Global variable
 let movies = [];
 
 // document ready block
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderMovies(movieArray) {
     const movieHtmlArray = movieArray.map(function (currentMovie) {
       console.log(movieArray);
-      axios.get('https://www.omdbapi.com/?apikey=b43843a0&i=' + currentMovie.imdbID)
+      axios.get('http://www.omdbapi.com/?apikey=b43843a0&i=' + currentMovie.imdbID)
         .then(function (response) {
           movieContainer.innerHTML += (`
             <div class="card mb-3 mr-4 w-100 shadow d-flex" style="max-width: 500px;">
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
       `)
         })
     });
-    // join all the HTML together
     const joined = movieHtmlArray.join('');
     return joined;
   }
@@ -57,20 +55,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // access the OMDB API, api key, &, s is default search
     // t, is title and gives more info
-    axios.get('https://www.omdbapi.com/?apikey=b43843a0&s=' + urlEncodedSearchString)
+    axios.get('http://www.omdbapi.com/?apikey=b43843a0&s=' + urlEncodedSearchString)
       .then(function (response) {
-        renderMovies(response.data.Search); //movieContainer.innerHTML = 
+        movieContainer.innerHTML = "";
+        renderMovies(response.data.Search);
         movies = response.data.Search;
         return movies;
       })
   })
+
+
 });
+
 
 // save to watch list
 function saveToWatchList(imdbID) {
   $(`#added${imdbID}`).text('added');
   $(`#added${imdbID}`).fadeOut(1000, 'swing', function () {
   });
+
 
   // change the icon color to green, but only alters the first element with id checkHREF 
   document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
@@ -81,18 +84,20 @@ function saveToWatchList(imdbID) {
   let watchlistJSON = localStorage.getItem('watchlist');
   let watchlist = JSON.parse(watchlistJSON);
 
-  // if no watch list, create an empty array
+
+  // add some sort of filter function to determine if imdbID is already in localStorage
+  // to prevent duplicates 
   if (watchlist === null) {
     watchlist = []
   }
 
-  // if clicked movie already in watchlist, dont add another instance of it
   let watchlistMovie = watchlist.find(currentMovie => currentMovie.imdbID == imdbID);
   if (!watchlistMovie) {
     watchlist.push(movie);
   }
+  console.log(watchlist);
 
-  // update localStorage
+
   watchlistJSON = JSON.stringify(watchlist);
   localStorage.setItem('watchlist', watchlistJSON);
 
