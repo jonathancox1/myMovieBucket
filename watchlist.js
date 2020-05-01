@@ -51,13 +51,13 @@ function renderMovies(watchlist1) {
 function removeFromWatchList(imdbID) {
 
     $(`#${imdbID}`).on('click', function () {
-        $(this).fadeToggle('slow', 'swing', function () {
+        $(this).slideToggle(500, 'swing', function () {
             $(this).remove();
         });
     })
 
+
     const movie = watchlist1.find(function (currentMovie) {
-        console.log(currentMovie.imdbID + 'currentMovie.imdbID');
         return currentMovie.imdbID == imdbID;
     });
     let watchlistJSON = localStorage.getItem('watchlist');
@@ -68,5 +68,4 @@ function removeFromWatchList(imdbID) {
 
     watchlistJSON = JSON.stringify(updatedWatchList);
     localStorage.setItem('watchlist', watchlistJSON);
-    // movieContainer.innerHTML = renderMovies(updatedWatchList);
 }
