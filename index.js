@@ -3,11 +3,18 @@ const movieContainer = document.querySelector(".moviesContainer");
 
 let movies = [];
 
+// function get localStorage
+function getLocalStorage() {
+  let watchlistJSON = localStorage.getItem('watchlist');
+  let watchlist = JSON.parse(watchlistJSON);
+  return watchlist;
+}
 
 // document ready block
 document.addEventListener('DOMContentLoaded', function () {
   function renderMovies(movieArray) {
     const movieHtmlArray = movieArray.map(function (currentMovie) {
+      console.log(movieArray);
       axios.get('http://www.omdbapi.com/?apikey=b43843a0&i=' + currentMovie.imdbID)
         .then(function (response) {
           movieContainer.innerHTML += (`
@@ -38,12 +45,22 @@ document.addEventListener('DOMContentLoaded', function () {
               </div>
             </div>
       `)
-        });
-      const joined = movieHtmlArray.join('');
-      return joined;
-    })
-  }
+          // get the movie data
+          let watchlist = getLocalStorage();
+          console.log(watchlist)
+          console.log('the watchlist');
 
+          if (watchlist.includes(response.data.imdbID)) {
+            document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
+            document.getElementById(added + imdbID).textContent = 'added';
+          }
+          console.log(watchlist);
+
+        })
+    });
+    const joined = movieHtmlArray.join('');
+    return joined;
+  }
 
   // search bar
   const myForm = document.getElementById('search-form');
@@ -56,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // access the OMDB API, api key, &, s is default search
     // t, is title and gives more info
-    axios.get('https://www.omdbapi.com/?apikey=b43843a0&s=' + urlEncodedSearchString)
+    axios.get('http://www.omdbapi.com/?apikey=b43843a0&s=' + urlEncodedSearchString)
       .then(function (response) {
         renderMovies(response.data.Search); //movieContainer.innerHTML = 
         movies = response.data.Search;
@@ -85,31 +102,20 @@ function saveToWatchList(imdbID) {
   let watchlist = JSON.parse(watchlistJSON);
 
 
+  // add some sort of filter function to determine if imdbID is already in localStorage
+  // to prevent duplicates 
   if (watchlist === null) {
     watchlist = []
   }
-  // prevents duplicates
-  // .find() returns true if currentMovie.imdbID == imdbID, the one that was clicked
-  // if !true, its added to the watch list
+
   let watchlistMovie = watchlist.find(currentMovie => currentMovie.imdbID == imdbID);
   if (!watchlistMovie) {
     watchlist.push(movie);
   }
+  console.log(watchlist);
 
 
   watchlistJSON = JSON.stringify(watchlist);
   localStorage.setItem('watchlist', watchlistJSON);
 
 }
-
-// // trying to search localStorage, if in localStorage, checkHREF is green indicating already added
-// // get the movie data
-// let watchlist = getLocalStorage();
-// console.log(watchlist)
-// console.log('the watchlist');
-
-// if (watchlist.includes(response.data.imdbID)) {
-//   document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
-//   document.getElementById(added + imdbID).textContent = 'added';
-// }
-// console.log(watchlist);
