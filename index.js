@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderMovies(movieArray) {
     const movieHtmlArray = movieArray.map(function (currentMovie) {
       console.log(movieArray);
-      axios.get('http://www.omdbapi.com/?apikey=b43843a0&i=' + currentMovie.imdbID)
+      axios.get('https://www.omdbapi.com/?apikey=b43843a0&i=' + currentMovie.imdbID)
         .then(function (response) {
           movieContainer.innerHTML += (`
             <div class="card mb-3 mr-4 w-100 shadow d-flex" style="max-width: 500px;">
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // access the OMDB API, api key, &, s is default search
     // t, is title and gives more info
-    axios.get('http://www.omdbapi.com/?apikey=b43843a0&s=' + urlEncodedSearchString)
+    axios.get('https://www.omdbapi.com/?apikey=b43843a0&s=' + urlEncodedSearchString)
       .then(function (response) {
         renderMovies(response.data.Search); //movieContainer.innerHTML = 
         movies = response.data.Search;
