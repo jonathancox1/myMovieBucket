@@ -41,8 +41,6 @@ function renderMovies(watchlist1) {
         })
         const joined = movieHtmlArray.join('');
         return joined;
-
-
     }
 }
 
@@ -50,13 +48,14 @@ function renderMovies(watchlist1) {
 // Remove from watch list
 function removeFromWatchList(imdbID) {
 
+    // jQuery animation
     $(`#${imdbID}`).on('click', function () {
         $(this).slideToggle(500, 'swing', function () {
             $(this).remove();
         });
     })
 
-
+    // find the clicked movie in the localStorage and remove it
     const movie = watchlist1.find(function (currentMovie) {
         return currentMovie.imdbID == imdbID;
     });
@@ -66,6 +65,7 @@ function removeFromWatchList(imdbID) {
         return item.Title != movie.Title
     })
 
+    // rewrite localStorage
     watchlistJSON = JSON.stringify(updatedWatchList);
     localStorage.setItem('watchlist', watchlistJSON);
 }

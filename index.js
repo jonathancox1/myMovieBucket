@@ -1,14 +1,8 @@
 // get the main container
 const movieContainer = document.querySelector(".moviesContainer");
 
+// create Global variable
 let movies = [];
-
-// function get localStorage
-function getLocalStorage() {
-  let watchlistJSON = localStorage.getItem('watchlist');
-  let watchlist = JSON.parse(watchlistJSON);
-  return watchlist;
-}
 
 // document ready block
 document.addEventListener('DOMContentLoaded', function () {
@@ -45,19 +39,9 @@ document.addEventListener('DOMContentLoaded', function () {
               </div>
             </div>
       `)
-          // get the movie data
-          let watchlist = getLocalStorage();
-          console.log(watchlist)
-          console.log('the watchlist');
-
-          if (watchlist.includes(response.data.imdbID)) {
-            document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
-            document.getElementById(added + imdbID).textContent = 'added';
-          }
-          console.log(watchlist);
-
         })
     });
+    // join all the HTML together
     const joined = movieHtmlArray.join('');
     return joined;
   }
@@ -80,17 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return movies;
       })
   })
-
-
 });
-
 
 // save to watch list
 function saveToWatchList(imdbID) {
   $(`#added${imdbID}`).text('added');
   $(`#added${imdbID}`).fadeOut(1000, 'swing', function () {
   });
-
 
   // change the icon color to green, but only alters the first element with id checkHREF 
   document.getElementById(imdbID).style.color = 'rgb(39, 199, 39)';
@@ -101,20 +81,18 @@ function saveToWatchList(imdbID) {
   let watchlistJSON = localStorage.getItem('watchlist');
   let watchlist = JSON.parse(watchlistJSON);
 
-
-  // add some sort of filter function to determine if imdbID is already in localStorage
-  // to prevent duplicates 
+  // if no watch list, create an empty array
   if (watchlist === null) {
     watchlist = []
   }
 
+  // if clicked movie already in watchlist, dont add another instance of it
   let watchlistMovie = watchlist.find(currentMovie => currentMovie.imdbID == imdbID);
   if (!watchlistMovie) {
     watchlist.push(movie);
   }
-  console.log(watchlist);
 
-
+  // update localStorage
   watchlistJSON = JSON.stringify(watchlist);
   localStorage.setItem('watchlist', watchlistJSON);
 
