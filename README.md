@@ -1,4 +1,4 @@
-# Scene It?  
+# myMovieBucket
 A single page CRUD app that interacts with the OMDB API.  Data is returned to the user and rederend to the page.  Data includes - Movie titles, posters, actors, release year, ratings, and a plot synopsis.  The user can then save and remove movies from a watchlist that lives in local storage.  
 [View the app here](https://jonathancoxmovies.netlify.app/)
 
